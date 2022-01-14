@@ -1,0 +1,42 @@
+<mxfile host="65bd71144e">
+    <diagram id="bKABsKU5tnJZbpaxeS2y" name="Page-1">
+        <mxGraphModel dx="1128" dy="489" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Random Quote" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="120" width="180" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Spinning ring image" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="354" y="30" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Char A" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="310" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Char B" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="310" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Char C" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="310" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="7">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="170" y="360" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="Random quote is generated from API. -&amp;nbsp;&lt;br&gt;quote &amp;amp; ID of character, obtainer from the API.&amp;nbsp;&lt;br&gt;Button has name of charater &amp;amp; the ID, in an object.&lt;br&gt;&lt;br&gt;- function generates random character,&amp;nbsp;&lt;br&gt;- function that fetches char in&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="420" width="260" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="This button could get the quote API.&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;br&gt;- Call Quote API Once. Set this data in setData.&amp;nbsp;&lt;br&gt;- work through each quote until the end of quiz.&lt;br&gt;&lt;br&gt;- so we will shift each question after it has been asked so we end up with an empty array.&amp;nbsp;&lt;br&gt;&lt;br&gt;So take char ID from quote API, and use it in a search of characters to get character name. This will be displayed in a button and we will match the char ID with the quote ID.&amp;nbsp;&lt;br&gt;&lt;br&gt;Generate 2 random place holders for the other buttons" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="530" y="10" width="280" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Use boolean to match char ID - true &amp;amp; false!&amp;nbsp;&lt;br&gt;&lt;br&gt;Use CSS for red &amp;amp; green.&amp;nbsp;&lt;br&gt;&lt;br&gt;If match user scores 1 point. If not match - then user loses a point.&amp;nbsp;&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="410" width="200" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="30" width="300" height="260" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
