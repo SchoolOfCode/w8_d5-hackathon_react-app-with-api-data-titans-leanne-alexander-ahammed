@@ -2,24 +2,20 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	async function getAPI() {
+		const response = await fetch('https://the-one-api.dev/v2/character?limit=10', {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer W8wht_QYtxgN3GBC0RHg'
+			}
+		});
+		const data = await response.json();
+		console.log(data);
+	}
+
+	getAPI();
+
+	return <div className="App" />;
 }
 
 export default App;
