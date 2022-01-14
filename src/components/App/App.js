@@ -3,12 +3,12 @@ import Quote from '../Quote/Quote';
 import Choices from '../Choices/Choices';
 
 import './App.css';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-function genRandIndex() {
+function genRandIndex(size, num) {
 	const randIndexArr = new Set();
-	while (randIndexArr.size < 10) {
-		const randomIndex = Math.floor(Math.random() * 101);
+	while (randIndexArr.size < size) {
+		const randomIndex = Math.floor(Math.random() * num);
 		randIndexArr.add(randomIndex);
 	}
 	return randIndexArr;
@@ -28,54 +28,48 @@ function App() {
 	// If random index exists in arr, generate another one.
 	// select from data the 10 random indexes
 
-	const [quotes, setQuotes] = useState([])
+	const [ quotes, setQuotes ] = useState([]);
+	const [ characters, setCharacters ] = useState([]);
 
-	  
-
-	useEffect(()=>{
+	useEffect(() => {
 		async function getAPI() {
-			const response = await fetch(
-				'https://the-one-api.dev/v2/quote?limit=100',
-				{
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': 'Bearer W8wht_QYtxgN3GBC0RHg',
-					},
+			const response = await fetch('https://the-one-api.dev/v2/quote?limit=100', {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer W8wht_QYtxgN3GBC0RHg'
 				}
-			);
+			});
 			const data = await response.json();
-			const randomIndexes = genRandIndex();
-			console.log(randomIndexes)
+			console.log('data', data);
+			const randomIndexes = genRandIndex(10, 101);
+			console.log(randomIndexes);
 			const newQuote = filterQuotes(data.docs, randomIndexes);
 			setQuotes(newQuote);
 		}
-		
-	
-		getAPI();
-	},[])
 
-	function renderQuote(){
-		if(quotes.length === 0){
+		getAPI();
+	}, []);
+
+	function renderQuote() {
+		if (quotes.length === 0) {
 			return;
-		}else{
-			return <Quote quotes={quotes} />
+		} else {
+			return (
+				<div>
+					<Quote quotes={quotes} />
+					<Choices quotes={quotes} genRandIndex={genRandIndex} filterCharacters={filterQuotes} />
+				</div>
+			);
 		}
 	}
-	
-	
 
 	return (
-		<div className='App'>
-			<header className='App-header'>
+		<div className="App">
+			<header className="App-header">
 				<h1>Lord of The Rings Quiz</h1>
-				<img
-					className='App-logo'
-					alt='One Ring to Rule Them All'
-					src={logo}
-				/>
+				<img className="App-logo" alt="One Ring to Rule Them All" src={logo} />
 				{/* <Quote quotes={quotes}/> */}
 				{renderQuote()}
-				<Choices />
 			</header>
 		</div>
 	);
