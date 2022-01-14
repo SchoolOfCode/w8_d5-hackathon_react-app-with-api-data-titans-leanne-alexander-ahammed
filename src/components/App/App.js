@@ -3,6 +3,7 @@ import Quote from '../Quote/Quote';
 import Choices from '../Choices/Choices';
 
 import './App.css';
+import { useState,useEffect } from 'react';
 
 function genRandIndex() {
 	const randIndexArr = new Set();
@@ -26,22 +27,42 @@ function App() {
 	//Ensure that the 10 random indexes are unique
 	// If random index exists in arr, generate another one.
 	// select from data the 10 random indexes
-	async function getAPI() {
-		const response = await fetch(
-			'https://the-one-api.dev/v2/quote?limit=100',
-			{
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer W8wht_QYtxgN3GBC0RHg',
-				},
-			}
-		);
-		const data = await response.json();
-		const randomIndexes = genRandIndex();
-		const finalQuotes = filterQuotes(data.docs, randomIndexes);
-	}
 
-	getAPI();
+	const [quotes, setQuotes] = useState([])
+
+	  
+
+	useEffect(()=>{
+		async function getAPI() {
+			const response = await fetch(
+				'https://the-one-api.dev/v2/quote?limit=100',
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': 'Bearer W8wht_QYtxgN3GBC0RHg',
+					},
+				}
+			);
+			const data = await response.json();
+			const randomIndexes = genRandIndex();
+			console.log(randomIndexes)
+			const newQuote = filterQuotes(data.docs, randomIndexes);
+			setQuotes(newQuote);
+		}
+		
+	
+		getAPI();
+	},[])
+
+	function renderQuote(){
+		if(quotes.length === 0){
+			return;
+		}else{
+			return <Quote quotes={quotes} />
+		}
+	}
+	
+	
 
 	return (
 		<div className='App'>
@@ -52,7 +73,8 @@ function App() {
 					alt='One Ring to Rule Them All'
 					src={logo}
 				/>
-				<Quote />
+				{/* <Quote quotes={quotes}/> */}
+				{renderQuote()}
 				<Choices />
 			</header>
 		</div>
