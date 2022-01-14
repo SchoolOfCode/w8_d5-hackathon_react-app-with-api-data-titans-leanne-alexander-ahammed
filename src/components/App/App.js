@@ -70,7 +70,7 @@ function App() {
 			return;
 		} else {
 			return (
-				<div>
+				<div className='gameQuotes'>
 					<Quote quotes={quotes} />
 					<Choices
 						quotes={quotes}

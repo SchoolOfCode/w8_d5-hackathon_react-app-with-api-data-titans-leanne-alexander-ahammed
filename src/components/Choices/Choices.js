@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import './Choices.css';
 
 export default function Choices({
@@ -8,6 +9,7 @@ export default function Choices({
 	score,
 	setScore,
 }) {
+	const [result, setResult] = useState('');
 	const choices = [];
 	function getRandomChoices() {
 		const indexArr = [
@@ -30,15 +32,14 @@ export default function Choices({
 	function checkAnswer(e) {
 		if (e.target.id === quotes[0].character) {
 			setScore(score++);
-		} else {
-			if (score < 1) {
-				return;
-			}
-			setScore(score--);
 		}
 		const newQuotes = [...quotes];
 		newQuotes.shift();
-		setQuotes(newQuotes);
+		if (newQuotes.length > 0) {
+			setQuotes(newQuotes);
+		} else {
+			setResult(`You've scored ${score}/10!`);
+		}
 	}
 
 	// make another api call to the specific character ID.
@@ -59,5 +60,10 @@ export default function Choices({
 			));
 		}
 	}
-	return <div className='choices'>{renderChoices()}</div>;
+	return (
+		<div className='choices'>
+			{renderChoices()}
+			<p id='results'>{result}</p>
+		</div>
+	);
 }
