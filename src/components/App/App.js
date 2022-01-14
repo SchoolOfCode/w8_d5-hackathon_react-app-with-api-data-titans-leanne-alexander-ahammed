@@ -5,22 +5,27 @@ import Choices from '../Choices/Choices';
 import './App.css';
 import { useState, useEffect } from 'react';
 
-function genRandIndex(size, num) {
+function genRandomData(size, num, apiData) {
 	const randIndexArr = new Set();
 	while (randIndexArr.size < size) {
 		const randomIndex = Math.floor(Math.random() * num);
 		randIndexArr.add(randomIndex);
 	}
-	return randIndexArr;
+	const randomData = [];
+	for (let index of randIndexArr) {
+		randomData.push(apiData[index]);
+	}
+	return randomData;
 }
 
-function filterQuotes(apiData, randIndexes) {
-	const newQuotes = [];
-	for (let index of randIndexes) {
-		newQuotes.push(apiData[index]);
-	}
-	return newQuotes;
-}
+const fetchHeaders = {
+	'Content-Type': 'application/json',
+	'Authorization': 'Bearer W8wht_QYtxgN3GBC0RHg',
+};
+
+// function filterQuotes(apiData, randIndexes) {
+
+// }
 
 function App() {
 	// Generate 10 random indexes
@@ -28,23 +33,33 @@ function App() {
 	// If random index exists in arr, generate another one.
 	// select from data the 10 random indexes
 
-	const [ quotes, setQuotes ] = useState([]);
-	const [ characters, setCharacters ] = useState([]);
+	const [quotes, setQuotes] = useState([]);
+	const [characters, setCharacters] = useState([]);
+	const [score, setScore] = useState(0);
 
 	useEffect(() => {
 		async function getAPI() {
-			const response = await fetch('https://the-one-api.dev/v2/quote?limit=100', {
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer W8wht_QYtxgN3GBC0RHg'
+			// Fetch Quotes from API
+			let response = await fetch(
+				'https://the-one-api.dev/v2/quote?limit=100',
+				{
+					headers: fetchHeaders,
 				}
+			);
+			let data = await response.json();
+			const gameQuotes = genRandomData(10, 101, data.docs);
+			setQuotes(gameQuotes);
+
+			// Fetch Characters from API
+			response = await fetch(`https://the-one-api.dev/v2/character`, {
+				headers: fetchHeaders,
 			});
-			const data = await response.json();
-			console.log('data', data);
-			const randomIndexes = genRandIndex(10, 101);
-			console.log(randomIndexes);
-			const newQuote = filterQuotes(data.docs, randomIndexes);
-			setQuotes(newQuote);
+			data = await response.json();
+			const chars = [];
+			data.docs.forEach((el) =>
+				chars.push({ name: el.name, id: el._id })
+			);
+			setCharacters(chars);
 		}
 
 		getAPI();
@@ -57,17 +72,27 @@ function App() {
 			return (
 				<div>
 					<Quote quotes={quotes} />
-					<Choices quotes={quotes} genRandIndex={genRandIndex} filterCharacters={filterQuotes} />
+					<Choices
+						quotes={quotes}
+						characters={characters}
+						score={score}
+						setScore={setScore}
+						setQuotes={setQuotes}
+					/>
 				</div>
 			);
 		}
 	}
 
 	return (
-		<div className="App">
-			<header className="App-header">
+		<div className='App'>
+			<header className='App-header'>
 				<h1>Lord of The Rings Quiz</h1>
-				<img className="App-logo" alt="One Ring to Rule Them All" src={logo} />
+				<img
+					className='App-logo'
+					alt='One Ring to Rule Them All'
+					src={logo}
+				/>
 				{/* <Quote quotes={quotes}/> */}
 				{renderQuote()}
 			</header>
